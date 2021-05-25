@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Realty;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -60,7 +61,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $realty_all = Realty::find()->count();
+        $realty_active = Realty::find()->where('status = 1')->count();
+
+        return $this->render('index', compact('realty_all', 'realty_active'));
     }
 
     /**

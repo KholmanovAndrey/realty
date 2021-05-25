@@ -29,14 +29,18 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
+        'brandLabel' => 'Административная панель',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
     ]);
     $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
+        ['label' => 'Главная', 'url' => ['/site/index']],
+        ['label' => 'Недвижимость', 'url' => ['/realty/index']],
+        ['label' => 'Адреса', 'url' => ['/address/index']],
+        ['label' => 'Улицы', 'url' => ['/street/index']],
+        ['label' => 'Города', 'url' => ['/city/index']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
@@ -68,9 +72,11 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Административная панель сайта</p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-right">
+            Сайт создан <a href="http://vebos.ru" target="_blank" class="creator">"Vebos"</a>
+        </p>
     </div>
 </footer>
 

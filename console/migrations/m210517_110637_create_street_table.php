@@ -3,33 +3,33 @@
 use yii\db\Migration;
 
 /**
- * Handles the creation of table `{{%streets}}`.
+ * Handles the creation of table `{{%street}}`.
  */
-class m210517_110637_create_streets_table extends Migration
+class m210517_110637_create_street_table extends Migration
 {
     /**
      * {@inheritdoc}
      */
     public function safeUp()
     {
-        $this->createTable('{{%streets}}', [
+        $this->createTable('{{%street}}', [
             'id' => $this->primaryKey(),
-            'city_id' => $this->integer(),
+            'city_id' => $this->integer()->notNull(),
             'name' => $this->string()->notNull()->unique(),
             'title' => $this->string()->notNull()->unique(),
         ]);
 
         $this->createIndex(
-            'idx-streets-city_id',
-            '{{%streets}}',
+            'idx-street-city_id',
+            '{{%street}}',
             'city_id'
         );
 
         $this->addForeignKey(
-            'fk-streets-city_id',
-            '{{%streets}}',
+            'fk-street-city_id',
+            '{{%street}}',
             'city_id',
-            '{{%cities}}',
+            '{{%city}}',
             'id'
 //            'CASCADE'
         );
@@ -41,15 +41,15 @@ class m210517_110637_create_streets_table extends Migration
     public function safeDown()
     {
         $this->dropForeignKey(
-            'fk-streets-city_id',
-            '{{%streets}}'
+            'fk-street-city_id',
+            '{{%street}}'
         );
 
         $this->dropIndex(
-            'idx-streets-city_id',
-            '{{%streets}}'
+            'idx-street-city_id',
+            '{{%street}}'
         );
 
-        $this->dropTable('{{%streets}}');
+        $this->dropTable('{{%street}}');
     }
 }
