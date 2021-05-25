@@ -30,7 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'street_id',
+            [
+                'attribute' => 'street_id',
+                'value' => function($data){
+                    return $data->street->title;
+                },
+            ],
             'building',
             'apartment',
         ],

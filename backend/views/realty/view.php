@@ -30,7 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'id',
-            'address_id',
+            [
+                'attribute' => 'address_id',
+                'value' => function($data){
+                    $result = $data->address->street->title . ' ' . $data->address->building;
+                    if ($data->address->apartment) {
+                        $result .= ', кв. ' . $data->address->apartment;
+                    }
+                    return $result;
+                },
+            ],
             'name',
             'title',
             'description',
@@ -41,9 +50,27 @@ $this->params['breadcrumbs'][] = $this->title;
             'district',
             'number_of_rooms',
             'sleeping_places',
-            'status',
-            'created_at',
-            'updated_at',
+            [
+                'attribute' => 'status',
+                'value' => function($data){
+                    return !$data->status ?
+                        '<span class="text-danger">Отключен</span>' :
+                        '<span class="text-success">Активен</span>';
+                },
+                'format' => 'raw',
+            ],
+            [
+                'attribute' => 'created_at',
+                'value' => function($data){
+                    return date('d.m.Y H:i:s', $data->created_at);
+                },
+            ],
+            [
+                'attribute' => 'updated_at',
+                'value' => function($data){
+                    return date('d.m.Y H:i:s', $data->updated_at);
+                },
+            ],
         ],
     ]) ?>
 

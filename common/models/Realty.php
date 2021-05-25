@@ -3,6 +3,8 @@
 namespace common\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "realty".
@@ -25,7 +27,7 @@ use Yii;
  *
  * @property Address $address
  */
-class Realty extends \yii\db\ActiveRecord
+class Realty extends ActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -33,6 +35,22 @@ class Realty extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'realty';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
+                    ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
+                ],
+            ],
+        ];
     }
 
     /**
@@ -68,8 +86,8 @@ class Realty extends \yii\db\ActiveRecord
             'number_of_rooms' => 'Кол-во комнат',
             'sleeping_places' => 'Спальные места',
             'status' => 'Статус',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'created_at' => 'Дата создания',
+            'updated_at' => 'Дата обновления',
         ];
     }
 

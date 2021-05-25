@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function($data){
                     return $data->city->title;
                 },
-                'format' => 'raw',
             ],
             'name',
             'title',
