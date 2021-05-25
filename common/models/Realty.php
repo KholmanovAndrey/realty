@@ -60,7 +60,7 @@ class Realty extends ActiveRecord
     {
         return [
             [['address_id', 'price', 'number_of_rooms', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['address_id', 'name', 'title', 'description', 'price', 'photos', 'phones', 'contact', 'district', 'number_of_rooms', 'sleeping_places', 'created_at', 'updated_at'], 'required'],
+            [['address_id', 'name', 'title', 'description', 'price', 'photos', 'phones', 'contact', 'district', 'number_of_rooms', 'sleeping_places'], 'required'],
             [['name', 'title', 'description', 'photos', 'phones', 'contact', 'district', 'sleeping_places'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['address_id'], 'exist', 'skipOnError' => true, 'targetClass' => Address::className(), 'targetAttribute' => ['address_id' => 'id']],
