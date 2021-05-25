@@ -6,6 +6,7 @@ use common\models\Address;
 use Yii;
 use common\models\Realty;
 use backend\models\search\RealtySearch;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

@@ -46,6 +46,9 @@ class AddressSearch extends Address
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 25
+            ],
         ]);
 
         $this->load($params);

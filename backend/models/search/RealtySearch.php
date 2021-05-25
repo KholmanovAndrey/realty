@@ -46,6 +46,14 @@ class RealtySearch extends Realty
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 25
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'status' => SORT_DESC
+                ]
+            ],
         ]);
 
         $this->load($params);
