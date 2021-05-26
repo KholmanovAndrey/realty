@@ -71,7 +71,7 @@ class Realty extends ActiveRecord
             [['name', 'title', 'description', 'phones', 'contact', 'district', 'sleeping_places'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['address_id'], 'exist', 'skipOnError' => true, 'targetClass' => Address::className(), 'targetAttribute' => ['address_id' => 'id']],
-//            [['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, PNG, JPG, JPEG', 'maxFiles' => 4],
+            [['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, PNG, JPG, JPEG', 'maxFiles' => 4],
         ];
     }
 
@@ -123,7 +123,7 @@ class Realty extends ActiveRecord
             FileHelper::createDirectory($fullPath);
 
             $filesString = '';
-            foreach ($this->imageFiles as $key => $file) {
+            foreach ($this->imageFiles as $file) {
                 $name = $file->baseName . '.' . $file->extension;
                 $file->saveAs($fullPath . $name);
                 $filesString .= $name . '|';
