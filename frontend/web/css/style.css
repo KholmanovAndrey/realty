@@ -1,0 +1,25 @@
+.realty__bg {
+  padding: 1rem;
+  background-color: #9fcdff; }
+.realty__box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid gray; }
+.realty__name {
+  font-size: 1.3rem; }
+.realty__button {
+  text-align: right;
+  padding: 0.5rem 0; }
+
+.realty-one__box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid gray; }
+.realty-one__name {
+  font-size: 1.3rem; }
+
+/*# sourceMappingURL=style.css.map */
