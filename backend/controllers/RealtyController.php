@@ -8,9 +8,11 @@ use common\models\Realty;
 use backend\models\search\RealtySearch;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
+use yii\helpers\FileHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * RealtyController implements the CRUD actions for Realty model.
@@ -85,7 +87,13 @@ class RealtyController extends Controller
         $model = new Realty();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($photos = $model->upload($model->id)) {
+                $model->photos .= $photos;
+            }
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         $addresses = Address::find()->all();
@@ -108,7 +116,13 @@ class RealtyController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($photos = $model->upload($model->id)) {
+                $model->photos .= $photos;
+            }
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
         $addresses = Address::find();

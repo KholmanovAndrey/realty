@@ -5,6 +5,8 @@ namespace common\models;
 use Yii;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\helpers\FileHelper;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "realty".
@@ -29,6 +31,11 @@ use yii\db\ActiveRecord;
  */
 class Realty extends ActiveRecord
 {
+    /**
+     * @var UploadedFile[]
+     */
+    public $imageFiles;
+
     /**
      * {@inheritdoc}
      */
@@ -61,9 +68,10 @@ class Realty extends ActiveRecord
         return [
             [['address_id', 'price', 'number_of_rooms', 'status', 'created_at', 'updated_at'], 'integer'],
             [['address_id', 'name', 'title', 'description', 'price', 'photos', 'phones', 'contact', 'district', 'number_of_rooms', 'sleeping_places'], 'required'],
-            [['name', 'title', 'description', 'photos', 'phones', 'contact', 'district', 'sleeping_places'], 'string', 'max' => 255],
+            [['name', 'title', 'description', 'phones', 'contact', 'district', 'sleeping_places'], 'string', 'max' => 255],
             [['name'], 'unique'],
             [['address_id'], 'exist', 'skipOnError' => true, 'targetClass' => Address::className(), 'targetAttribute' => ['address_id' => 'id']],
+//            [['imageFiles'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, PNG, JPG, JPEG', 'maxFiles' => 4],
         ];
     }
 
@@ -88,6 +96,7 @@ class Realty extends ActiveRecord
             'status' => 'Статус',
             'created_at' => 'Дата создания',
             'updated_at' => 'Дата обновления',
+            'imageFiles' => 'Добавить фотографии'
         ];
     }
 
@@ -99,5 +108,29 @@ class Realty extends ActiveRecord
     public function getAddress()
     {
         return $this->hasOne(Address::className(), ['id' => 'address_id']);
+    }
+
+    /**
+     * Загрузка картинок
+     *
+     * @param $id
+     * @return bool
+     */
+    public function upload($id)
+    {
+        if ($this->validate()) {
+            $fullPath = '../../uploads/realty/' . $id . '/';
+            FileHelper::createDirectory($fullPath);
+
+            $filesString = '';
+            foreach ($this->imageFiles as $key => $file) {
+                $name = $file->baseName . '.' . $file->extension;
+                $file->saveAs($fullPath . $name);
+                $filesString .= $name . '|';
+            }
+            return $filesString;
+        } else {
+            return false;
+        }
     }
 }

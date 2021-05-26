@@ -39,6 +39,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'photos')->textInput() ?>
 
+    <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?>
+
     <?= $form->field($model, 'phones')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'contact')->textInput(['maxlength' => true]) ?>
