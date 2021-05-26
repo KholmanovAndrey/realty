@@ -34,7 +34,7 @@ class RealtyController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'view', 'create', 'update'],
+                        'actions' => ['logout', 'index', 'view', 'create', 'update', 'delete'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -146,6 +146,8 @@ class RealtyController extends Controller
     public function actionDelete($id)
     {
         $this->findModel($id)->delete();
+        $uploadForm = new UploadForm();
+        $uploadForm->delete('realty/' . $id);
 
         return $this->redirect(['index']);
     }
