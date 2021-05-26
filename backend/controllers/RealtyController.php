@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use common\models\Address;
+use common\models\UploadForm;
 use Yii;
 use common\models\Realty;
 use backend\models\search\RealtySearch;
@@ -87,8 +88,9 @@ class RealtyController extends Controller
         $model = new Realty();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            if ($photos = $model->upload($model->id)) {
+            $uploadForm = new UploadForm();
+            $uploadForm->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($photos = $uploadForm->upload('realty/' . $model->id)) {
                 $model->photos .= $photos;
             }
             if ($model->save()) {
@@ -116,8 +118,9 @@ class RealtyController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
-            if ($photos = $model->upload($model->id)) {
+            $uploadForm = new UploadForm();
+            $uploadForm->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($photos = $uploadForm->upload('realty/' . $model->id)) {
                 $model->photos .= $photos;
             }
             if ($model->save()) {
